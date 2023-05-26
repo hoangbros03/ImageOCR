@@ -1,2 +1,6 @@
 data
 notebooks/PaddleOCR
+flask-app/__pycache__
+__pycache__/
+*.py[cod]
+*$py.class
