@@ -40,7 +40,7 @@
             <a class="nav-link" href="/faq">FAQ</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">About me</a>
+            <a class="nav-link" href="/contact">Contact</a>
           </li>
         </ul>
       </div>
@@ -49,6 +49,9 @@
       {% block content %}
       <div class="row">
         <div class="col text-center">
+          <div class="row">
+            <p>Your upload times left is: {{threshold- count_times}}.</p>
+          </div>
           <form method="post" enctype="multipart/form-data">
             <div class="row">
               <div class="col-auto">

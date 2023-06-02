@@ -5,21 +5,23 @@ import cv2
 import os
 from PIL import Image
 import numpy as np
+from mmocr.apis import MMOCRInferencer
+from models_functions import text_detection_dict, text_recognition_dict
 
 
-def get_model(lang="en"):
-    '''
-    Get model with language specified
-    '''
-    return PaddleOCR(lang=lang)
-
-def get_bounding_box(model, img):
+def get_bounding_box_PaddleOCR(model_name, img):
     '''
     Get bounding box with model and img
-    Model: from get_model
+    Model_name: string - model name
     img: can be either path or np array
     '''
-    return np.array(model.ocr(img, rec=False))
+    if model_name in text_detection_dict['PaddleOCR']:
+        model=PaddleOCR(lang="en")
+        return np.array(model.ocr(img, rec=False))
+    else:
+        infer = MMOCRInferencer(det=model)
+        result = infer(img, return_vis=True)
+        return np.array(result['predictions'][0]['det_polygons'])
 
 def get_text_from_bounding_box(model, img, boxes = None):
     '''
@@ -27,7 +29,7 @@ def get_text_from_bounding_box(model, img, boxes = None):
     model: from get_model
     boxes: np array indicate boxes position
     img: image, path or np array
-    If boxes = None, so PaddleOCR will automatically get text from img
+    If boxes = None, so model (PaddleOCR) will automatically get text from img
     '''
     if boxes is None:
         result = model.ocr(img)[0]
@@ -49,11 +51,9 @@ def get_text_from_bounding_box(model, img, boxes = None):
         texts.append(text)
     return "\n".join(texts)
 
-if __name__ == "__main__":
-    # Testing purposes
-    model = get_model()
-    boxes = get_bounding_box(model, "../../data/no-text/tree-736885_1280.jpg")
-
+def get_bounding_box_mmocr(model, img):
+    '''
+    Get bounding box using mmocr
+    '''
     
 
-    print(get_text_from_bounding_box(model,"../../data/no-text/tree-736885_1280.jpg",boxes))

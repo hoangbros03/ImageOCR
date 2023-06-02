@@ -1,5 +1,5 @@
 import argparse
-from src.models.paddleocr_model import *
+from src.models.models_functions import *
 
 
 parser = argparse.ArgumentParser(
@@ -32,7 +32,7 @@ parser.add_argument(
 args = parser.parse_args()
 
 
-def get_text(text_detection='paddleocr', text_recognition="paddleocr", url= None):
+def get_text(text_detection='PaddleOCR', text_recognition="PaddleOCR", url= None):
     '''
     Get text from an image (both text detection and text recognition)
     Parameters:
@@ -42,14 +42,14 @@ def get_text(text_detection='paddleocr', text_recognition="paddleocr", url= None
     Output:
     text
     '''
-    if text_detection!='paddleocr' or text_recognition!='paddleocr':
-        return "Model selected have not supported yet!"
+    if text_detection =="YOLO":
+        return "text detection YOLO is not supported yet. Please choose others."
     elif url is None:
         return "URL isn't provided"
     else:
-        model = get_model()
-        boxes = get_bounding_box(model, url)
-        texts = get_text_from_bounding_box(model, url, boxes)
+        model = get_model_PaddleOCR()
+        boxes = get_bounding_box_PaddleOCR(model, url)
+        texts = get_text_from_bounding_box_PaddleOCR(model, url, boxes)
         return texts
 
 if __name__=="__main__":

@@ -1,8 +1,9 @@
 data
-notebooks/PaddleOCR
-notebooks/yolov5
 flask-app/__pycache__
 __pycache__/
 uploads/
+src/models/mmocr
+notebooks/PaddleOCR
+notebooks/yolov5
 *.py[cod]
 *$py.class
