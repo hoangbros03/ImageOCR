@@ -1,0 +1,46 @@
+{% extends 'index.html' %} {% block content %}
+<div class="row">
+    <h1>FAQ Page</h1>
+</div>
+<div class="row">
+  <div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse1"
+            >What is image text recognition?</a
+          >
+        </h4>
+      </div>
+      <div id="collapse1" class="panel-collapse collapse">
+        <div class="panel-body">It is the process that converts an image of text into string that user can handle normally (cut, copy, edit,...).</div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse2"
+            >What types of images that your website currently supporting?</a
+          >
+        </h4>
+      </div>
+      <div id="collapse2" class="panel-collapse collapse">
+        <div class="panel-body">My website currently accepts jpg, jpeg, png. Other image file formats may cause an error, including pdf. If you want to get text from a pdf file, please check out <a href="#">this</a></div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse3"
+            >Are there any limitations to your image text recognition software?</a
+          >
+        </h4>
+      </div>
+      <div id="collapse3" class="panel-collapse collapse">
+        <div class="panel-body">My website is totally free to use. You are allowed to convert unlimited number image </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
