@@ -3,8 +3,10 @@ from flask_uploads import UploadSet, IMAGES, configure_uploads
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from wtforms import SubmitField
+import sys
+sys.path.append("models/mmocr")
 from src.mainProgram import *
-
+from src.models.models_list import text_detection_dict, text_recognition_dict
 
 app= Flask(__name__)
 app.config['SECRET_KEY'] = 'abcd'
@@ -14,10 +16,7 @@ UPLOAD_THRESHOLD = 3
 photos = UploadSet('photos', IMAGES)
 configure_uploads(app, photos)
 
-options={
-    "textDetectionOptions":['paddleOCR', 'YOLO'],
-    "textRecognitionOptions": ['paddleOCR', 'somethingmore']
-}
+options=get_options()
 
 # To limit upload times
 ip_dict = {}

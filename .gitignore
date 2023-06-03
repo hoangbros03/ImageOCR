@@ -2,8 +2,7 @@ data
 flask-app/__pycache__
 __pycache__/
 uploads/
-src/models/mmocr
-notebooks/PaddleOCR
-notebooks/yolov5
+models/
+
 *.py[cod]
 *$py.class

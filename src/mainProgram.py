@@ -1,6 +1,8 @@
 import argparse
-from src.models.models_functions import *
-
+from .models.models_functions import get_bounding_box, get_text_from_bounding_box
+from .models.models_list import get_options
+# from models.models_functions import *
+# from models.models_list import *
 
 parser = argparse.ArgumentParser(
     description="Parser for specifying the model to do the OCR"
@@ -30,7 +32,7 @@ parser.add_argument(
 )
 
 args = parser.parse_args()
-
+options= get_options()
 
 def get_text(text_detection='PaddleOCR', text_recognition="PaddleOCR", url= None):
     '''
@@ -47,10 +49,14 @@ def get_text(text_detection='PaddleOCR', text_recognition="PaddleOCR", url= None
     elif url is None:
         return "URL isn't provided"
     else:
-        model = get_model_PaddleOCR()
-        boxes = get_bounding_box_PaddleOCR(model, url)
-        texts = get_text_from_bounding_box_PaddleOCR(model, url, boxes)
+        # Check model name valid
+        if text_detection in options['textDetectionOptions'] and text_recognition in options['textRecognitionOptions']:
+            boxes = get_bounding_box(model_name=text_detection, img=url)
+            texts= get_text_from_bounding_box(model_name=text_recognition, img=url, boxes=boxes)
+        else:
+            texts = "Wrong model names (either in Text det or rec)"
         return texts
 
 if __name__=="__main__":
-    get_text()
+    # get_text()
+    print(options)

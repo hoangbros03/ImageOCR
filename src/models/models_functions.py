@@ -5,11 +5,12 @@ import cv2
 import os
 from PIL import Image
 import numpy as np
+
 from mmocr.apis import MMOCRInferencer
-from models_functions import text_detection_dict, text_recognition_dict
+from .models_list import text_detection_dict, text_recognition_dict
 
 
-def get_bounding_box_PaddleOCR(model_name, img):
+def get_bounding_box(model_name, img):
     '''
     Get bounding box with model and img
     Model_name: string - model name
@@ -19,9 +20,12 @@ def get_bounding_box_PaddleOCR(model_name, img):
         model=PaddleOCR(lang="en")
         return np.array(model.ocr(img, rec=False))
     elif model_name in text_detection_dict['mmocr']:
-        infer = MMOCRInferencer(det=model)
+        infer = MMOCRInferencer(det=model_name)
         result = infer(img, return_vis=True)
-        return np.array(result['predictions'][0]['det_polygons'])
+        # print("result 2 get bb: ",result)
+        result = np.array(result['predictions'][0]['det_polygons'])
+        print("Result shape: ", result.shape)
+        return result
     else:
         print("wrong model name!")
         return None
@@ -33,6 +37,20 @@ def get_text_from_bounding_box(model_name: str, img, boxes = None):
     img: image, path or np array
     If boxes = None, so model (PaddleOCR) will automatically get text from img
     '''
+    # Reshape if bounding box is made from mmocr
+    boxes=np.array(boxes)
+    if boxes.ndim !=4:
+        boxes = boxes.reshape((1,-1,4,2))
+        print("boxes shape: ",boxes.shape)
+    
+    # Make instance of model if needed
+    if model_name in text_recognition_dict['PaddleOCR']:
+        model = PaddleOCR(lang="en")
+    elif model_name in text_recognition_dict['mmocr']:
+        infer = MMOCRInferencer(rec=model_name)
+    else:
+        return "Wrong model name. Please re-check!"
+    
     if boxes is None:
         model=PaddleOCR(lang="en")
         result = model.ocr(img)[0]
@@ -44,17 +62,6 @@ def get_text_from_bounding_box(model_name: str, img, boxes = None):
         img =np.array(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
     
     texts =[]
-    # Reshape if bounding box is made from mmocr
-    if model_name in text_recognition_dict['mmocr']:
-        boxes = boxes.reshape((1,-1,4,2))
-    
-    # Make instance of model if needed
-    if model_name in text_recognition_dict['PaddleOCR']:
-        model = PaddleOCR(lang="en")
-    elif model_name in text_recognition_dict['mmocr']:
-        infer = MMOCRInferencer(rec=model_name)
-    else:
-        return "Wrong model name. Please re-check!"
     
     for pos in boxes[0]:
         pos= np.array(pos)
@@ -68,7 +75,8 @@ def get_text_from_bounding_box(model_name: str, img, boxes = None):
         elif model_name in text_recognition_dict['mmocr']:
             
             text = infer(img[y_min:y_max,x_min:x_max, :], save_vis=True, return_vis=True)
-            text = ' '.join(text['prediction'][0]['rec_texts'])
+            # print("Text: ", text)
+            text = ' '.join(text['predictions'][0]['rec_texts'])
         texts.append(text)
     return "\n".join(texts)
 
