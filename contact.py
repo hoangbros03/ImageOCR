@@ -40,7 +40,7 @@ def contact():
 
         return render_template("contact-success.html")
     else:
-        return render_template("contact.html", form= form)
+        return render_template("contact.html", form= form, my_email = config.EMAIL_RECEIVE)
         
 
 def send_email(data):

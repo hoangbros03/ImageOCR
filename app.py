@@ -10,6 +10,7 @@ from src.models.models_list import *
 from config import *
 import preload_model
 from contact import *
+import os 
 
 app= Flask(__name__)
 app.config['SECRET_KEY'] = SECRET_KEY
@@ -79,6 +80,12 @@ def upload_image():
     
 
     return render_template('index.html', form=form, file_url=file_url, options = options, texts= texts, count_times = ip_dict[get_ip()], threshold = UPLOAD_THRESHOLD)
+
+@app.route('/pricing', methods=['GET','POST'])
+def get_pricing_page():
+    if request.method=="POST":
+        return render_template("under-construction.html")
+    return render_template("pricing.html")
 
 @app.route('/faq', methods=['GET'])
 def get_faq_page():

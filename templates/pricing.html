@@ -1,0 +1,64 @@
+{% extends "index.html" %} {% block content %}
+<div class="row justify-content-center">
+  <h1>My pricing plans</h1>
+</div>
+<div class="row mt-3">
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Free plan</h5>
+        <h6 class="card-subtitle mb-2 text-muted">Best for beginner</h6>
+        <p class="card-text">
+          Upload up to 3 images.
+        </p>
+        <form method="POST">
+          <input type="hidden" name="action" value="submit" />
+          <button type="submit">Purchase</button>
+        </form>
+      </div>
+    </div>
+
+    
+
+      
+
+  </div>
+  <div class="col">
+    <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Normal plan</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Good for usual users</h6>
+          <p class="card-text">
+            Upload up to 10 images per day.
+          </p>
+          <p class="card-text">
+            24/24 online support.
+          </p>
+          <form method="POST">
+            <input type="hidden" name="action" value="submit" />
+            <button type="submit">Purchase</button>
+          </form>
+        </div>
+      </div>
+  </div>
+  <div class="col">
+    <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">VIP plan</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Best plan available.</h6>
+          <p class="card-text">
+            Unlimited images.
+          </p>
+          <p class="card-text">
+            24/24 online support.
+          </p>
+          <form method="POST" class="justify-content-center">
+            <input type="hidden" name="action" value="submit" />
+            <button type="submit">Purchase</button>
+          </form>
+        </div>
+      </div>
+
+  </div>
+</div>
+{% endblock %}
