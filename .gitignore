@@ -1,7 +1,7 @@
 data
 flask-app/__pycache__
 __pycache__/
-
+notebooks/
 models/
 
 *.py[cod]
