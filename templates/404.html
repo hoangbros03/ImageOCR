@@ -1,5 +1,11 @@
 {% extends 'index.html' %} {% block content %}
 <h1 class="text-center">404 Error</h1>
+<div>
+  <img src="{{url_for("static",filename ="404image.jpg")}}" alt="404 image"
+  width="400px" height="400px" class="mx-auto d-block"/>
+</div>
 <h5 class="text-center">Sorry, I can't find what you looking for.</h5>
-<h5 class="text-center">You will be redirected to the homepage after 5 seconds...</h5>
+<h5 class="text-center">
+  You will be redirected to the homepage after 5 seconds...
+</h5>
 {% endblock %}

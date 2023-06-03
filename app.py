@@ -6,12 +6,18 @@ from wtforms import SubmitField
 import sys
 sys.path.append("models/mmocr")
 from src.mainProgram import *
-from src.models.models_list import text_detection_dict, text_recognition_dict
+from src.models.models_list import *
+from config import *
+import preload_model
+from contact import *
 
 app= Flask(__name__)
-app.config['SECRET_KEY'] = 'abcd'
+app.config['SECRET_KEY'] = SECRET_KEY
+UPLOAD_THRESHOLD = UPLOAD_THRESHOLD
 app.config['UPLOADED_PHOTOS_DEST']='uploads'
-UPLOAD_THRESHOLD = 3
+
+if PRELOAD_MODEL:
+    preload_model.preload_models()
 
 photos = UploadSet('photos', IMAGES)
 configure_uploads(app, photos)
@@ -47,6 +53,8 @@ def record_ip():
         ip_dict[ip_address] = 0
         
 
+app.register_blueprint(contact_bp)
+
 @app.route('/uploads/<filename>')
 def get_file(filename):
     return send_from_directory(app.config['UPLOADED_PHOTOS_DEST'], filename)
@@ -63,7 +71,8 @@ def upload_image():
             file_url = url_for('get_file', filename=filename)
             print(str(app.config['UPLOADED_PHOTOS_DEST']+ filename))
             texts = get_text(url = os.path.join(app.config['UPLOADED_PHOTOS_DEST'],filename))
-            ip_dict[get_ip()]+=1
+            if get_ip() not in IP_VIP:
+                ip_dict[get_ip()]+=1
     else:
         file_url=None
         texts=""
@@ -75,10 +84,14 @@ def upload_image():
 def get_faq_page():
     return render_template("faq.html")
 
+# @app.route('/cs')
+# def getcs():
+#     return render_template("contact-success.html")
+
 @app.route('/404', methods=['GET'])
 @app.errorhandler(404)
 def get_notfound_page(e = "ok", limit= False):
-    return render_template("404.html"), {"Refresh": "5; url=/"}
+    return render_template("404.html"), {"Refresh": "10; url=/"}
 
 
 if __name__=='__main__':

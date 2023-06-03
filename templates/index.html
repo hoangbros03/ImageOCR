@@ -50,7 +50,7 @@
       <div class="row">
         <div class="col text-center">
           <div class="row">
-            <p>Your upload times left is: {{threshold- count_times}}.</p>
+            <p>Your upload times left is: {{threshold- count_times}}. Ignore the number if your ip address is VIP.</p>
           </div>
           <form method="post" enctype="multipart/form-data">
             <div class="row">
@@ -89,17 +89,7 @@
                 </select>
               </div>
             </div>
-            <div class="form-row mt-2 justify-content-center">
-              <div class="col-auto">
-                <div class="input-group-text justify-content-center">
-                  <input
-                    type="checkbox"
-                    aria-label="Checkbox for following text input"
-                  />
-                  <span class="ml-2"> Allow for normalizing text</span>
-                </div>
-              </div>
-            </div>
+            
             <div class="form-row mt-2 justify-content-center">
               <input type="submit" value="Submit" class="btn btn-success" />
             </div>
