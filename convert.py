@@ -1,4 +1,4 @@
-from flask import Blueprint, Flask, render_template, request
+from flask import Blueprint, Flask, render_template, request, send_from_directory
 from flask_wtf import FlaskForm
 import pandas as pd
 import uuid
@@ -49,3 +49,6 @@ def convert():
     else:
         return render_template("pdf2image.html")
 
+@pdf2image_bf.route('/pdf_images/<dir1>/<dir2>')
+def get_zip_file(dir1, dir2):
+    return send_from_directory("pdf_images/"+dir1, dir2)

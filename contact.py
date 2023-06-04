@@ -9,6 +9,7 @@ import config
 
 contact_bp = Blueprint("contact", __name__)
 
+
 class ContactForm(FlaskForm):
     name = StringField("Name")
     email=StringField("Email")
@@ -29,14 +30,6 @@ def contact():
         mail = pd.DataFrame(object_to_save, index =[0])
         mail.to_csv('contactMails/'+str(uuid.uuid4())+".csv")
 
-        # Make post request using 3rd API
-        object_to_send={
-            "from": config.NAME_SEND + " <" + config.EMAIL_SEND+">",
-            "to": config.NAME_RECEIVE + " <" + config.EMAIL_RECEIVE +">",
-            "subject": subject,
-            "text": object_to_save
-        }
-        send_email(object_to_send)
 
         return render_template("contact-success.html")
     else:

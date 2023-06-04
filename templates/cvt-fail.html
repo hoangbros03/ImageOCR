@@ -1,3 +1,11 @@
 {% extends "index.html" %} {% block content %}
-<h1>Developing...</h1>
+<div class="justify-content-center">
+    <div>
+      <img src="{{url_for("static",filename ="cvt-fail.png")}}"
+      alt="convert failed" width="400px" height="400px" class="mx-auto
+      d-block"/>
+    </div>
+    <h1 class="mt-2">Unfortunately, the convertion is failed</h1>
+    <h3 class="mt-2">It may due to the fact that file you have chosen is not a pdf file. Please try again!</h3>
+  </div>
 {% endblock %}

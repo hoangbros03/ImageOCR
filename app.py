@@ -3,6 +3,7 @@ from flask_uploads import UploadSet, IMAGES, configure_uploads
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from wtforms import SubmitField
+
 import sys
 sys.path.append("models/mmocr")
 from src.mainProgram import *
