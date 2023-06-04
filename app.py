@@ -94,11 +94,15 @@ def upload_image():
             filename = photos.save(form.photo.data)
             file_url = url_for("get_file", filename=filename)
             print(str(app.config["UPLOADED_PHOTOS_DEST"] + filename))
-            texts = get_text(
-                url=os.path.join(app.config["UPLOADED_PHOTOS_DEST"], filename)
-            )
-            if get_ip() not in IP_VIP:
-                ip_dict[get_ip()] += 1
+            if filename.split(".")[-1] == "gif":
+                file_url = None
+                texts = ""
+            else:
+                texts = get_text(
+                    url=os.path.join(app.config["UPLOADED_PHOTOS_DEST"], filename)
+                )
+                if get_ip() not in IP_VIP:
+                    ip_dict[get_ip()] += 1
     else:
         file_url = None
         texts = ""
