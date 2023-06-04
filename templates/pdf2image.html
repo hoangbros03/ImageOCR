@@ -1,0 +1,29 @@
+{% extends "index.html" %} {% block content %}
+<div class="row justify-content-center">
+  <h1>PDF to Image converter</h1>
+</div>
+<div class="row">
+  <div class="col">
+    <form action="/convert" method="POST" enctype="multipart/form-data">
+      <div class="row justify-content-center mt-5">
+        <span>Import your file: </span>
+        <input
+          type="file"
+          name="file"
+          class="ml-2"
+          style="border-width: 1px; border-style: solid; border-color: #5a5757; "
+        />
+      </div>
+      <div class="row justify-content-center mt-5">
+        <button type="submit" class="btn btn-success">Convert</button>
+      </div>
+    </form>
+  </div>
+  <div class="col mt-3">
+    <p>This tool converts PDFs into a series of images that can be uploaded to extract the text and incorporate it as a feature on my website.</p>
+    <p>Please note that only PDF files are allowed and the tool can only handle one file at a time. </p>
+    <p>After processing, you can receive an ZIP file containing all of the images inside that pdf file.</p>
+  </div>
+</div>
+
+{% endblock %}

@@ -10,6 +10,7 @@ from src.models.models_list import *
 from config import *
 import preload_model
 from contact import *
+from convert import *
 import os 
 
 app= Flask(__name__)
@@ -55,6 +56,7 @@ def record_ip():
         
 
 app.register_blueprint(contact_bp)
+app.register_blueprint(pdf2image_bf)
 
 @app.route('/uploads/<filename>')
 def get_file(filename):
@@ -90,6 +92,7 @@ def get_pricing_page():
 @app.route('/faq', methods=['GET'])
 def get_faq_page():
     return render_template("faq.html")
+
 
 # @app.route('/cs')
 # def getcs():
